@@ -1,24 +1,38 @@
-body {
-    background-color: #1d2630;
-    color: white;
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#root {
-    align-items: center;
-    padding: 100px;
+table {
+  background-color: white;
+  text-align: center;
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid crimson;
+  margin: 0px;
 }
 
-form {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    border: 1px white solid;
+th {
+  font-size: 18px;
+  text-align: center;
 }
 
-input {
-    border-radius: 10px;
-    padding: 10px;
-    align-self: center;
-    width: 100%;
+td {
+  font-size: 15px;
+}
+
+th,
+td {
+  padding: 10px;
+}
+
+tr {
+  font-weight: 550;
+}
+
+thead {
+  background-color: crimson;
+  color: white;
+}
+tr:nth-child(even) {
+  background-color: rgb(226, 175, 185);
 }
