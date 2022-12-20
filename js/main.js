@@ -237,7 +237,7 @@ eliminar.append(btnEliminar);
 btnEliminar.addEventListener("click", () => {
   const id = prompt("Ingresa el ID del registro que deseas eliminar:")
   let confirmar = prompt("¿Estás seguro de querer eliminar el registro? ingrese (Si)")
-  if(confirmar = "Si"){
+  if(confirmar == "Si" || confirmar == "si" || confirmar == "SI"){
       users = eliminarDatos(id)
   }else{
       return
@@ -248,7 +248,6 @@ btnEliminar.addEventListener("click", () => {
 
 function eliminarDatos(id){
   return users.filter((argumento) => argumento.id != id)
-
 }
 
 
