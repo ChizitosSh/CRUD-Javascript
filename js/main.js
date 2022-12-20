@@ -13,14 +13,21 @@ let users = [
 
 // READ
 
+const h1 = document.createElement('h1');
+h1.textContent = 'JavaScript CRUD'
+h1.classList.add("text-center", "my-5")
+
+
 const seccionUsers = document.createElement("section");
 seccionUsers.classList.add("container", "mt-5");
+
+seccionUsers.append(h1)
 root.append(seccionUsers);
 
+
 const tabla = document.createElement("table");
-tabla.classList.add("table");
-tabla.classList.add("border");
-tabla.classList.add("border-2");
+tabla.classList.add("table", "table-striped", "table-dark");
+
 seccionUsers.append(tabla);
 crearTabla();
 function crearTabla() {
@@ -181,7 +188,7 @@ function modificarDatos(argumento) {
 const modificar = document.createElement("section");
 seccionUsers.append(modificar);
 const btnModificar = document.createElement("button");
-btnModificar.classList.add("btn", "btn-danger");
+btnModificar.classList.add("btn", "btn-warning", "text-light");
 btnModificar.textContent = "Modificar";
 modificar.append(btnModificar);
 btnModificar.addEventListener("click", () => {
