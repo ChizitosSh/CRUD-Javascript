@@ -108,7 +108,7 @@ return users
 const crearUsuario = document.createElement("section");
 seccionUsers.append(crearUsuario);
 const btnCrear = document.createElement("button");
-btnCrear.classList.add("btn", "btn-primary");
+btnCrear.classList.add("btn", "btn-danger");
 btnCrear.textContent = "Crear Usuario";
 crearUsuario.append(btnCrear);
 btnCrear.addEventListener("click", () => {
