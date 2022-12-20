@@ -13,29 +13,27 @@ let users = [
 
 // READ
 
-const h1 = document.createElement('h1');
+const h1 = document.createElement('h1'); // Crea un h1
 h1.textContent = 'JavaScript CRUD'
-h1.classList.add("text-center", "my-5")
+h1.classList.add("text-center", "my-5") // Agrega clases de Bootstrap
 
 
-const seccionUsers = document.createElement("section");
-seccionUsers.classList.add("container", "mt-5");
+const seccionUsers = document.createElement("section"); // Crea un section
+seccionUsers.classList.add("container", "mt-5"); // Agrega clases de Bootstrap
 
-seccionUsers.append(h1)
-root.append(seccionUsers);
+seccionUsers.append(h1) // Inserta el h1 dentro del section
+root.append(seccionUsers); // Inserta el section dentro del root
 
 
-const tabla = document.createElement("table");
+const tabla = document.createElement("table"); // Crea un table
 tabla.classList.add("table", "table-striped", "table-dark");
 
-seccionUsers.append(tabla);
-crearTabla();
+seccionUsers.append(tabla); // Inserta el table dentro del section
+crearTabla(); // Lanza la function crearTabla
 function crearTabla() {
   tabla.innerHTML = "";
-  const thead = document.createElement("thead");
-  tabla.append(thead);
-  crearCabezadoUsuarios();
-  construirCuerpo();
+  crearCabezadoUsuarios(); // Llama la function que crea el thead/encabezado
+  construirCuerpo(); // Llama la function que crea el cuerpo
 }
 
 
@@ -176,7 +174,7 @@ function modificarDatos(argumento) {
       usuario[i].apellido = prompt(`Apellido es:`);
       usuario[i].edad = prompt(`Edad es:`);
       usuario[i].profesion = prompt(`Profesión es:`);
-      usuario[i].fechaActualizacion = new Date();
+      usuario[i].fechaActualizacion = new Date().toISOString();
     }
   });
 
@@ -195,35 +193,6 @@ btnModificar.addEventListener("click", () => {
   modificarDatos(users);
   crearTabla();
 });
-
-
-
-// DELETE
-
-// const btnBorrar = document.createElement("button");
-// btnBorrar.classList.add("btn", "btn-danger");
-// btnBorrar.textContent = "Borrar registro";
-// crearUsuario.append(btnBorrar);
-
-// btnBorrar.addEventListener("click", deleteUser);
-
-// function deleteUser(){
-//   let id = prompt("Ingrese el id del registro que desea borrar:");
-//   if(id){
-//     let registro = users.find(user => user.id == id);
-//     if(registro) {
-//       if (confirm("¿Está seguro de que desea eliminar el registro?")){
-//         users = users.filter(user => user.id != id);
-//         tabla.innerHTML = "";
-//         crearTabla();
-//         alert("Registro eliminado exitosamente");
-//       }
-//     } else {
-//       alert("No se encontró ningún registro con ese id");
-//     }
-//   }
-// }
-
 
 
 
