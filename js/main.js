@@ -1,62 +1,296 @@
-const root = document.getElementById('root');
+const root = document.getElementById("root");
+let users = [
+  {
+    id: 1,
+    nombre: "Andres",
+    apellido: "Pacheco",
+    edad: 38,
+    profesion: "developer",
+    created_at: "2022-09-26T06:25:21.118Z",
+  },
+  {
+    id: 2,
+    nombre: "Andrea",
+    apellido: "Sanchez",
+    edad: 25,
+    profesion: "profesor",
+    created_at: "2022-04-18T14:14:32.879Z",
+  },
+  {
+    id: 3,
+    nombre: "Julia",
+    apellido: "Ochoa",
+    edad: 32,
+    profesion: "musico",
+    created_at: "2021-12-14T11:53:38.279Z",
+  },
+  {
+    id: 4,
+    nombre: "Samuel",
+    apellido: "Martinez",
+    edad: 29,
+    profesion: "programador",
+    created_at: "2022-01-26T03:31:15.202Z",
+  },
+  {
+    id: 5,
+    nombre: "Roberto",
+    apellido: "Mattos",
+    edad: 40,
+    profesion: "chef",
+    created_at: "2022-07-27T02:06:22.760Z",
+  },
+  {
+    id: 6,
+    nombre: "Mercedes",
+    apellido: "Sanchez",
+    edad: 35,
+    profesion: "veterinario",
+    created_at: "2022-05-01T22:06:35.864Z",
+  },
+];
 
-// Creamos el formulario
-let formulario = document.createElement("form");
 
-root.append(formulario) // Une el form al #root del HTML
 
-// Creamos el campo de nombre
-let labelNombre = document.createElement("label");
-labelNombre.for = "nombre";
-labelNombre.innerHTML = "Nombre:";
-let inputNombre = document.createElement("input");
-inputNombre.type = "text";
-inputNombre.id = "nombre";
-inputNombre.name = "nombre";
-inputNombre.required = true;
+// READ
 
-// Creamos el campo de apellido
-let labelApellido = document.createElement("label");
-labelApellido.for = "apellido";
-labelApellido.innerHTML = "Apellido:";
-let inputApellido = document.createElement("input");
-inputApellido.type = "text";
-inputApellido.id = "apellido";
-inputApellido.name = "apellido";
-inputApellido.required = true;
+const seccionUsers = document.createElement("section");
+seccionUsers.classList.add("container", "mt-5");
+root.append(seccionUsers);
 
-// Creamos el campo de correo electrónico
-let labelEmail = document.createElement("label");
-labelEmail.for = "email";
-labelEmail.innerHTML = "Correo electrónico:";
-let inputEmail = document.createElement("input");
-inputEmail.type = "email";
-inputEmail.id = "email";
-inputEmail.name = "email";
-inputEmail.required = true;
+const tabla = document.createElement("table");
+tabla.classList.add("table");
+tabla.classList.add("border");
+tabla.classList.add("border-2");
+seccionUsers.append(tabla);
+crearTabla();
+function crearTabla() {
+  tabla.innerHTML = "";
+  const thead = document.createElement("thead");
+  tabla.append(thead);
+  crearCabezadoUsuarios();
+  construirCuerpo();
+}
 
-// Creamos el campo de celular
-let labelCelular = document.createElement("label");
-labelCelular.for = "celular";
-labelCelular.innerHTML = "Celular:";
-let inputCelular = document.createElement("input");
-inputCelular.type = "tel";
-inputCelular.id = "celular";
-inputCelular.name = "celular";
-inputCelular.required = true;
 
-// Creamos el botón de submit
-let inputSubmit = document.createElement("input");
-inputSubmit.type = "submit";
-inputSubmit.value = "Registrar";
+function construirCuerpo() {
+  for (const index in users) {
+    const tr = document.createElement("tr");
+    for (const key in users[index]) {
+      const td = document.createElement("td");
+      td.classList.add("px-3");
+      td.textContent = users[index][key];
+      tr.append(td);
+    }
+    tabla.append(tr);
+  }
+}
 
-// Añadimos los elementos al formulario
-formulario.append(labelNombre);
-formulario.append(inputNombre);
-formulario.append(labelApellido);
-formulario.append(inputApellido);
-formulario.append(labelEmail);
-formulario.append(inputEmail);
-formulario.append(labelCelular);
-formulario.append(inputCelular);
-formulario.append(inputSubmit)
+function crearCabezadoUsuarios() {
+  const encabezados = document.createElement("thead");
+  const tr = document.createElement("tr");
+
+  for (const key in users[0]) {
+    const th = document.createElement("th");
+    th.textContent = key;
+    th.style.cursor = "pointer";
+    th.addEventListener("click", () => {
+      ordenarPorArgumento(key);
+      tabla.innerHTML = "";
+      tabla.append(encabezados);
+      construirCuerpo();
+    });
+    tr.append(th);
+  }
+
+  encabezados.append(tr);
+  tabla.append(encabezados);
+}
+
+
+
+// CREATE
+
+
+function crearDatosUsuario() {
+  let datosUsuario = prompt(
+    `Ingrese la información del usuario (nombre, apellido, edad, profesión)`
+  );
+  if (datosUsuario !== null) {
+    let usuarioArray = datosUsuario.split(", ");
+    let objeto = { id: users.length + 1 };
+    objeto.nombre = usuarioArray[0];
+    objeto.apellido = usuarioArray[1];
+    objeto.edad = usuarioArray[2];
+    objeto.profesion = usuarioArray[3];
+    objeto.created_at = new Date();
+    users.push(objeto);
+  }
+  return users;
+}
+
+//Botón Agregar
+const crearUsuario = document.createElement("section");
+seccionUsers.append(crearUsuario);
+const btnCrear = document.createElement("button");
+btnCrear.classList.add("btn", "btn-primary");
+btnCrear.textContent = "Crear Usuario";
+crearUsuario.append(btnCrear);
+btnCrear.addEventListener("click", () => {
+  crearDatosUsuario(users);
+  crearTabla();
+  saveInLocalStorage();
+});
+
+
+
+// Victor
+
+
+function saveInLocalStorage() {
+    //como no se pueden guardar array en localstorage, convertimos nuestro array en JSON y de esta manera localstorage puede almacenar nuestros usuarios
+    console.log(users,'usuarios antes de json');
+    localStorage.setItem("usuarios", JSON.stringify(users));
+  };
+  
+//   function pintarHTML() {
+//     root.innerHTML = "";
+//     //leemos el JSON del localstorage y parseamos a array para poder realizar una lectura de el y mostrar en pantalla
+//     users = JSON.parse(localStorage.getItem("users"));
+//     //console.log(arrayActividades)
+  
+//     if ( users === null ) {
+//       users = []; //cuando el localstorage este vacio, definir el array como vacio
+//       table.innerHTML = `
+//           <div class="alert alert-primary" role="alert">
+//               <b>Lista Vacia</b>
+//           </div>
+//           `;
+//     } else {
+//       users.forEach((element) => {
+//         element.estado
+//           ? //concateno cada elemento del array en mi lista de actividades
+//           (table.innerHTML += `
+//               <div class="alert alert-success" role="alert">
+//                   <b>${element.id} - ${element.nombre}</b> - ${element.apellido} - ${element.edad} - ${element.profesion} 
+//               </div>
+//               `)
+//           : //concateno cada elemento del array en mi lista de actividades
+//           (table.innerHTML += `
+//               <div class="alert alert-danger" role="alert">
+//                   <b>${element.id} - ${element.nombre}</b> - ${element.apellido} - ${element.edad} - ${element.profesion} 
+//               </div>
+//               `);
+//       });
+//     }
+//   };
+
+
+// UPDATE
+
+function modificarDatos(argumento) {
+  let id = prompt(`Ingrese el id del usuario`);
+  if (id == "") {
+    return "Para modificar debes ingresar el id";
+  }
+  let objeto = users;
+  argumento.forEach((user, i) => {
+    if (user.id == id) {
+      objeto[i].nombre = prompt(`Nombre es:`);
+      objeto[i].apellido = prompt(`Apellido es:`);
+      objeto[i].edad = prompt(`Edad es:`);
+      objeto[i].profesion = prompt(`Profesión es:`);
+      objeto[i].updateDate = new Date();
+    }
+  });
+
+  users = objeto;
+  return users;
+}
+
+//Botón Modificar
+const modificar = document.createElement("section");
+seccionUsers.append(modificar);
+const btnModificar = document.createElement("button");
+btnModificar.classList.add("btn", "btn-primary");
+btnModificar.textContent = "Modificar";
+modificar.append(btnModificar);
+btnModificar.addEventListener("click", () => {
+  modificarDatos(users);
+  crearTabla();
+});
+
+
+
+// DELETE
+
+const btnBorrar = document.createElement("button");
+btnBorrar.classList.add("btn", "btn-danger");
+btnBorrar.textContent = "Borrar registro";
+crearUsuario.append(btnBorrar);
+
+btnBorrar.addEventListener("click", deleteUser);
+
+function deleteUser(){
+  let id = prompt("Ingrese el id del registro que desea borrar:");
+  if(id){
+    let registro = users.find(user => user.id == id);
+    if(registro) {
+      if (confirm("¿Está seguro de que desea eliminar el registro?")){
+        users = users.filter(user => user.id != id);
+        tabla.innerHTML = "";
+        crearTabla();
+        alert("Registro eliminado exitosamente");
+      }
+    } else {
+      alert("No se encontró ningún registro con ese id");
+    }
+  }
+}
+
+
+
+// ADICIONAL
+
+var ordenAscendente = true; // Variable para llevar la cuenta del orden actual
+
+function ordenarPorArgumento(property) {
+
+  // Creamos la función de comparación que se usará en el método sort()
+
+  function comparar(a, b) {
+    if (ordenAscendente) {
+      // Ordenamos de menor a mayor
+        if (typeof users[0][property] === "string"){ // Si es un string
+            console.log('is an string')
+            return a[property].localeCompare(b[property])
+
+        } else if (typeof users[0][property] === "number"){ // Si es un número
+            console.log('is a number');
+            return a[property] - b[property]
+            
+        } else {
+            return "Por favor utiliza un atributo válido"
+        }
+    } else {
+      // Ordenamos de mayor a menor
+        if (typeof users[0][property] === "string"){ // Si es un string
+            console.log('is an string')
+            return b[property].localeCompare(a[property])
+
+        } else if (typeof users[0][property] === "number"){ // Si es un número
+            console.log('is a number');
+            return b[property] - a[property]
+            
+        } else {
+            return "Por favor utiliza un atributo válido"
+        }
+    }
+  }
+
+  // Ordenamos el array usando el método sort() y la función de comparación creada
+  users.sort(comparar);
+
+  // Cambiamos el valor de la variable para llevar la cuenta del próximo orden
+  ordenAscendente = !ordenAscendente;
+}
