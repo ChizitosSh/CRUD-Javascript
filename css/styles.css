@@ -22,3 +22,40 @@ input {
     align-self: center;
     width: 100%;
 }
+
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+table{
+    background-color:white;
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid crimson;  
+    margin: 0px;
+}
+
+th{
+    font-size: 18px; 
+    text-align: center;
+}
+
+td{
+    font-size: 15px;
+}
+
+th, td{
+    padding:  10px;
+}
+
+tr{
+    font-weight: 550;
+}
+
+thead{
+    background-color: crimson;
+    color: white;    
+}
+tr:nth-child(even){
+    background-color:rgb(226, 175, 185);
+}
