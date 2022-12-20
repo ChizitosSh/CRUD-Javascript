@@ -1,0 +1,173 @@
+
+const root = document.getElementById("root");
+let users = [
+    {id: 1, nombre: "Andres", apellido: "Pacheco", edad: 38, profesion: "developer", created_at: "2022-09-26T06:25:21.118Z"},
+    {id: 2, nombre: "Andrea", apellido: "Sanchez", edad: 25, profesion: "profesor", created_at: "2022-04-18T14:14:32.879Z"},
+    {id: 3, nombre: "Julia", apellido: "Ochoa", edad: 32, profesion: "musico", created_at: "2021-12-14T11:53:38.279Z"},
+    {id: 4, nombre: "Samuel", apellido: "Martinez", edad: 29, profesion: "programador", created_at: "2022-01-26T03:31:15.202Z"},
+    {id: 5, nombre: "Roberto", apellido: "Mattos", edad: 40, profesion: "chef", created_at: "2022-07-27T02:06:22.760Z"},
+    {id: 6, nombre: "Mercedes", apellido: "Sanchez", edad: 35, profesion: "veterinario", created_at: "2022-05-01T22:06:35.864Z"},
+  ]
+
+  const seccionUsers = document.createElement("section");
+  seccionUsers.classList.add("container", "mt-5");
+  root.append(seccionUsers)
+
+const tabla = document.createElement("table");
+tabla.classList.add("table");
+tabla.setAttribute("border", "2");
+seccionUsers.append(tabla);
+crearTabla();
+function crearTabla() {
+  tabla.innerHTML = "";
+  const thead = document.createElement("thead");
+  tabla.append(thead);
+  crearCabezadoUsuarios();
+  construirCuerpo();
+}
+
+  
+  //Botón Agregar
+  const crearUsuario = document.createElement("section");
+  seccionUsers.append(crearUsuario);
+  const btnCrear = document.createElement("button");
+  btnCrear.classList.add("btn","btn-danger");
+  btnCrear.textContent = "Crear Usuario";
+  crearUsuario.append(btnCrear);
+  btnCrear.addEventListener("click", () => {
+    crearDatosUsuario();
+    crearTabla();
+  });
+
+
+  //Botón Modificar
+  const modificar = document.createElement("section");
+  seccionUsers.append(modificar);
+  const btnModificar = document.createElement("button");
+  btnModificar.classList.add("btn","btn-danger");
+  btnModificar.textContent = "Modificar";
+  modificar.append(btnModificar);
+  btnModificar.addEventListener("click", () => {
+    modificarDatos(users);
+    crearTabla();
+  });
+  
+  //Botón Eliminar
+  const eliminar = document.createElement("section");
+  seccionUsers.append(eliminar);
+  const btnEliminar = document.createElement("button");
+  btnEliminar.classList.add("btn","btn-danger");
+  btnEliminar.textContent = "Eliminar";
+  eliminar.append(btnEliminar);
+  btnEliminar.addEventListener("click", () => {
+    const id = prompt("Ingresa el ID del registro que deseas eliminar:")
+    let confirmar = prompt("¿Estás seguro de querer eliminar el registro? ingrese (si)")
+    if(confirmar == "si"){
+        users = eliminarDatos(id)
+    }else{
+        return
+    }
+   // eliminarDatos(users);
+    crearTabla();
+  });
+  
+
+function construirCuerpo(){
+    for (const index in users){
+        const tr = document.createElement("tr")
+            for (const key in users[index]){
+                const td = document.createElement("td")
+                td.textContent = users[index][key]
+                tr.append(td)
+            }
+        tabla.append(tr)
+    }
+}
+
+function crearCabezadoUsuarios(){
+    const encabezados = document.createElement("thead");
+    const tr = document.createElement("tr");
+    for (const key in users[0]){
+        const th = document.createElement("th")
+        th.textContent = capitalizarPalabra(key);
+        th.style.cursor = "pointer";
+        th.addEventListener("click", () =>{
+            sortProductsBy(key)
+            tabla.innerHTML = ""
+            tabla.append(encabezados)
+            construirCuerpo()
+        })
+        tr.append(th)
+    }
+    
+    encabezados.append(tr);
+    tabla.append(encabezados);
+    }
+
+// Función para crear usuarios nuevos
+function crearDatosUsuario() {
+    let datosUsuario = prompt("Ingrese la información del usuario (nombre, apellido, edad, profesión)");
+    if(datosUsuario!==null){
+
+    let usuarioArray = datosUsuario.split(","); 
+    let fecha = new Date;
+    let usuario = {id: generarID(),
+    id: users.length + 1}
+    usuario.nombre = usuarioArray[0];
+    usuario.apellido = usuarioArray[1];
+    usuario.edad = usuarioArray[2];
+    usuario.profesion = usuarioArray[3];
+    usuario.created_at = fecha.toISOString();
+    users.push(usuario);
+    generarID();
+  }
+return users
+}
+
+function generarID(){
+
+  }
+
+  //Función para modificar Datos del usuario
+  function modificarDatos(argumento){
+    let id = prompt("Ingrese el id del usuario");
+    if(id==""){
+      return "Para modificar debes ingresar el id"
+    }
+    let usuario = users
+    argumento.forEach((user, i) => {
+      if(user.id == id){
+        usuario[i].nombre = prompt("Nombre es:");
+        usuario[i].apellido = prompt("Apellido es:");
+        usuario[i].edad = prompt("Edad es:");
+        usuario[i].profesion = prompt("Profesión es:");
+        usuario[i].fechaActualizacion = new Date;
+      }
+      
+    });
+
+    users = usuario;
+    return users;
+  }
+
+/*
+  function generarID() {
+    let d = new Date().getTime();
+    let id = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (d + Math.random() * 16) % 16 | 0;
+      d = Math.floor(d / 16);
+      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return id;
+  };*/
+  
+
+//Función para eliminar un usuario
+  function eliminarDatos(id){
+    return users.filter((argumento) => argumento.id != id)
+  
+}
+
+function capitalizarPalabra(palabra){
+  return palabra.charAt(0).toUpperCase() + palabra.slice(1)
+}
