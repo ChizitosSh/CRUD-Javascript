@@ -35,3 +35,16 @@ thead {
 }
 tr:nth-child(even) {
   background-color: rgb(226, 175, 185);
+  
+
+button{
+    background-color: crimson;
+    border: 1px solid crimson;
+    border-radius: 5px;
+    margin-top: 15px;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    height: 20%;
+    cursor: pointer;
+}
