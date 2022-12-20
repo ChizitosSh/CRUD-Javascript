@@ -39,6 +39,7 @@ function crearTabla() {
 
 function construirCuerpo() {
   for (const index in users) {
+    const tbody = document.createElement("tbody");
     const tr = document.createElement("tr");
     for (const key in users[index]) {
       const td = document.createElement("td");
@@ -105,10 +106,18 @@ return users
 //Botón Agregar
 const crearUsuario = document.createElement("section");
 seccionUsers.append(crearUsuario);
+
 const btnCrear = document.createElement("button");
+const i_crear = document.createElement('i');
+
 btnCrear.classList.add("btn", "btn-primary");
+i_crear.classList.add("bi", "bi-box-arrow-in-up-left")
+
 btnCrear.textContent = "Crear Usuario";
+btnCrear.append(i_crear)
+
 crearUsuario.append(btnCrear);
+
 btnCrear.addEventListener("click", () => {
   crearDatosUsuario(users);
   crearTabla();
@@ -185,10 +194,18 @@ function modificarDatos(argumento) {
 //Botón Modificar
 const modificar = document.createElement("section");
 seccionUsers.append(modificar);
+
 const btnModificar = document.createElement("button");
+const i_modificar = document.createElement("i");
+
 btnModificar.classList.add("btn", "btn-warning", "text-light");
+i_modificar.classList.add("bi", "bi-pencil-square")
+
 btnModificar.textContent = "Modificar";
+btnModificar.append(i_modificar)
+
 modificar.append(btnModificar);
+
 btnModificar.addEventListener("click", () => {
   modificarDatos(users);
   crearTabla();
@@ -196,12 +213,48 @@ btnModificar.addEventListener("click", () => {
 
 
 
+// DELETE
+
+// const btnBorrar = document.createElement("button");
+// btnBorrar.classList.add("btn", "btn-danger");
+// btnBorrar.textContent = "Eliminar";
+// crearUsuario.append(btnBorrar);
+
+// btnBorrar.addEventListener("click", deleteUser);
+
+// function deleteUser(){
+//   let id = prompt("Ingrese el id del registro que desea borrar:");
+//   if(id){
+//     let registro = users.find(user => user.id == id);
+//     if(registro) {
+//       if (confirm("¿Está seguro de que desea eliminar el registro?")){
+//         users = users.filter(user => user.id != id);
+//         tabla.innerHTML = "";
+//         crearTabla();
+//         alert("Registro eliminado exitosamente");
+//       }
+//     } else {
+//       alert("El id ingresado no existe");
+//     }
+//   }
+// }
+
+
+
+
 //Botón Eliminar
 const eliminar = document.createElement("section");
 seccionUsers.append(eliminar);
+
 const btnEliminar = document.createElement("button");
+const i_eliminar = document.createElement("i");
+
 btnEliminar.classList.add("btn","btn-danger");
+i_eliminar.classList.add("bi", "bi-trash3-fill")
+
 btnEliminar.textContent = "Eliminar";
+btnEliminar.append(i_eliminar)
+
 eliminar.append(btnEliminar);
 btnEliminar.addEventListener("click", () => {
   const id = prompt("Ingresa el ID del registro que deseas eliminar:")
